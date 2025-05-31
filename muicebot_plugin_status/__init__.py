@@ -22,6 +22,7 @@ COMMAND_PREFIXES = [".", "/"]
 
 TEMPLATE_PATH = str(Path(__file__).parent / "template")
 TEMPLATE_NAME = "index.html.jinja"
+TEMPLATE_CSS = Path(__file__).parent / "static" / "css" / "output.css"
 
 command_schedule = on_alconna(
     Alconna(COMMAND_PREFIXES, "status", meta=CommandMeta("Muicebot 图片状态")),
@@ -33,6 +34,7 @@ command_schedule = on_alconna(
 @command_schedule.handle()
 async def status():
     info = await get_info()
+    info["inline_css"] = TEMPLATE_CSS.read_text()
 
     pic = await template_to_pic(
         template_path=TEMPLATE_PATH,
