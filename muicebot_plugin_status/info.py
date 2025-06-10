@@ -9,6 +9,7 @@ import psutil
 from muicebot.muice import Muice
 from muicebot.utils.utils import get_version
 from nonebot import __version__, get_bot, get_driver
+from nonebot_plugin_orm import async_scoped_session
 
 from .config import plugin_config
 
@@ -101,19 +102,19 @@ def get_disk_usage():
     return f"{used:.1f}/{total:.0f} GB"
 
 
-async def get_token_usage() -> str:
+async def get_token_usage(session: async_scoped_session) -> str:
     """
     获取 token 用量信息
     """
-    today_count, total_count = await muice.database.get_model_usage()
+    today_count, total_count = await muice.database.get_model_usage(session)
     return f"{today_count} tokens (总 {total_count} tokens)"
 
 
-async def get_conv_count() -> str:
+async def get_conv_count(session: async_scoped_session) -> str:
     """
     获取总对话次数
     """
-    today_count, total_count = await muice.database.get_conv_count()
+    today_count, total_count = await muice.database.get_conv_count(session)
     return f"{today_count} 次 (总 {total_count} 次)"
 
 
@@ -152,7 +153,7 @@ async def get_network_recv() -> str:
     return _format_speed(download_speed)
 
 
-async def get_info() -> dict:
+async def get_info(session: async_scoped_session) -> dict:
     model_name = muice.model_config.model_name or "Unknown"
     return {
         "avatar": plugin_config.avatar_url,
@@ -163,8 +164,8 @@ async def get_info() -> dict:
         "model_name": model_name,
         "model": f"{model_name} {'(多模态)' if muice.model_config.multimodal else ''}",
         "loader": muice.model_config.loader or "(未加载)",
-        "count": await get_conv_count(),
-        "tokens": await get_token_usage(),
+        "count": await get_conv_count(session),
+        "tokens": await get_token_usage(session),
         "system": get_system_info(),
         "cpu": get_cpu_info(),
         "memory": get_memory_info(),

@@ -8,6 +8,7 @@ from .info import get_info
 
 require("nonebot_plugin_alconna")
 require("nonebot_plugin_htmlrender")
+require("nonebot_plugin_orm")
 require("muicebot")
 
 from muicebot.plugin import PluginMetadata  # noqa: E402
@@ -15,6 +16,7 @@ from nonebot_plugin_alconna import CommandMeta, on_alconna  # noqa: E402
 from nonebot_plugin_alconna.uniseg import Image as UniImage  # noqa: E402
 from nonebot_plugin_alconna.uniseg import UniMessage  # noqa: E402
 from nonebot_plugin_htmlrender import template_to_pic  # noqa: E402
+from nonebot_plugin_orm import async_scoped_session  # noqa: E402
 
 __meta__ = PluginMetadata(name="MuiceBot 图片状态插件", description="", usage=".status")
 
@@ -32,8 +34,8 @@ command_schedule = on_alconna(
 
 
 @command_schedule.handle()
-async def status():
-    info = await get_info()
+async def status(session: async_scoped_session):
+    info = await get_info(session)
     info["inline_css"] = TEMPLATE_CSS.read_text()
 
     pic = await template_to_pic(
