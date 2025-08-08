@@ -50,7 +50,9 @@ def get_system_info() -> str:
                 if "=" in line:
                     k, v = line.strip().split("=", 1)
                     info[k] = v.strip('"')
-            name = info.get("PRETTY_NAME") or (info.get("NAME", "Linux") + " " + info.get("VERSION", ""))
+            name = info.get("PRETTY_NAME") or (
+                info.get("NAME", "Linux") + " " + info.get("VERSION", "")
+            )
             return name
         except Exception:
             return "Linux"
