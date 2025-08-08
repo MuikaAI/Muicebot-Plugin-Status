@@ -6,7 +6,7 @@
 <div align=center>
   <a href="https://nonebot.dev/"><img src="https://img.shields.io/badge/nonebot-2-red" alt="nonebot2"></a>
   <img src="https://img.shields.io/badge/Code%20Style-Black-121110.svg" alt="codestyle">
-  <a href='https://qm.qq.com/q/lhUBw6Gcdq'><img src="https://img.shields.io/badge/QQ群-MuiceHouse-blue" alt="QQ群组"></a>
+  <a href='https://qm.qq.com/q/Q5rVU7wlag'><img src="https://img.shields.io/badge/QQ群-MuiceHouse-pink" alt="QQ群组"></a>
 </div>
 
 <details>
